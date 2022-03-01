@@ -65,6 +65,7 @@
     "@storybook/react": "^6.4.19",
     "@storybook/testing-library": "^0.0.9",
     "@types/styled-components": "^5.1.23",
+    "msw": "^0.38.1",
     "webpack": "^5.69.1"
   }
 }
