@@ -26,9 +26,9 @@ describe("App", () => {
     render(<App />);
     expect(screen.getByText("Search")).toBeInTheDocument();
   });
-  it("should display No Movies by default", () => {
+  it("should display No Movie by default", () => {
     render(<App />);
-    expect(screen.getByText("No Movies")).toBeInTheDocument();
+    expect(screen.getByText("No Movie")).toBeInTheDocument();
   });
 
   // integration test
@@ -72,5 +72,23 @@ describe("App", () => {
         "Invalid API key"
       );
     });
+  });
+
+  it("should call API once per submit", async () => {
+    render(<App />);
+
+    const spyOnFetch = jest.spyOn(global, "fetch");
+    spyOnFetch.mockImplementation((): any =>
+      Promise.resolve({
+        json: (): Promise<object> => Promise.resolve([{}]),
+      })
+    );
+
+    const button = screen.getByText("Search");
+    const titleInput = screen.getByPlaceholderText("Search Title");
+    userEvent.type(titleInput, "titanic");
+    fireEvent.click(button);
+
+    expect(spyOnFetch).toBeCalledTimes(1);
   });
 });
