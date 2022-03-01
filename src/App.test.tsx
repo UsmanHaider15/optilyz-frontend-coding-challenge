@@ -17,6 +17,17 @@ const setupTestServer = (response: object): void => {
   afterAll(() => server.close());
 };
 
+const submitForm = (
+  formInput: string,
+  formPlaceholder: string,
+  buttonText: string
+): void => {
+  const button = screen.getByText(buttonText);
+  const titleInput = screen.getByPlaceholderText(formPlaceholder);
+  userEvent.type(titleInput, formInput);
+  fireEvent.click(button);
+};
+
 describe("App", () => {
   it("should contain an input field", () => {
     render(<App />);
@@ -46,10 +57,9 @@ describe("App", () => {
     });
     it("should render movie details", async () => {
       render(<App />);
-      const button = screen.getByText("Search");
-      const titleInput = screen.getByPlaceholderText("Search Title");
-      userEvent.type(titleInput, "Titanic");
-      fireEvent.click(button);
+
+      submitForm("Titanic", "Search Title", "Search");
+
       await waitFor(() => screen.getByText("Titanic"));
       expect(screen.getByText("Titanic")).toBeInTheDocument();
     });
@@ -61,10 +71,7 @@ describe("App", () => {
     it("should render error badge with correct error", async () => {
       render(<App />);
 
-      const button = screen.getByText("Search");
-      const titleInput = screen.getByPlaceholderText("Search Title");
-      userEvent.type(titleInput, "Titanic");
-      fireEvent.click(button);
+      submitForm("Titanic", "Search Title", "Search");
 
       await waitFor(() => screen.getByRole("error-badge"));
 
@@ -74,39 +81,35 @@ describe("App", () => {
     });
   });
 
-  it("should call API once per submit", async () => {
-    render(<App />);
+  describe("API", () => {
+    it("should be called per submit", async () => {
+      render(<App />);
 
-    const spyOnFetch = jest.spyOn(global, "fetch");
-    spyOnFetch.mockImplementation((): any =>
-      Promise.resolve({
-        json: (): Promise<object> => Promise.resolve([{}]),
-      })
-    );
+      const spyOnFetch = jest.spyOn(global, "fetch");
+      spyOnFetch.mockImplementation((): any =>
+        Promise.resolve({
+          json: (): Promise<object> => Promise.resolve([{}]),
+        })
+      );
 
-    const button = screen.getByText("Search");
-    const titleInput = screen.getByPlaceholderText("Search Title");
-    userEvent.type(titleInput, "titanic");
-    fireEvent.click(button);
+      submitForm("titanic", "Search Title", "Search");
 
-    expect(spyOnFetch).toBeCalledTimes(1);
-  });
+      expect(spyOnFetch).toBeCalledTimes(1);
+    });
 
-  it("shouldn't call API if input field is empty", async () => {
-    render(<App />);
+    it("shouldn't be called if input is empty", async () => {
+      render(<App />);
 
-    const spyOnFetch = jest.spyOn(global, "fetch");
-    spyOnFetch.mockImplementation((): any =>
-      Promise.resolve({
-        json: (): Promise<object> => Promise.resolve([{}]),
-      })
-    );
+      const spyOnFetch = jest.spyOn(global, "fetch");
+      spyOnFetch.mockImplementation((): any =>
+        Promise.resolve({
+          json: (): Promise<object> => Promise.resolve([{}]),
+        })
+      );
 
-    const button = screen.getByText("Search");
-    const titleInput = screen.getByPlaceholderText("Search Title");
-    userEvent.type(titleInput, "");
-    fireEvent.click(button);
+      submitForm("", "Search Title", "Search");
 
-    expect(spyOnFetch).toBeCalledTimes(0);
+      expect(spyOnFetch).toBeCalledTimes(0);
+    });
   });
 });
