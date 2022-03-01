@@ -31,46 +31,46 @@ describe("App", () => {
     expect(screen.getByText("No Movies")).toBeInTheDocument();
   });
 
-  // // integration test
-  // describe("When request is successful", () => {
-  //   setupTestServer({
-  //     Title: "Titanic",
-  //     Ratings: [],
-  //     Released: "",
-  //     Genre: "",
-  //     Director: "",
-  //     Write: "",
-  //     Actors: "",
-  //     Language: "",
-  //     Awards: "",
-  //   });
-  //   it("should render movie details", async () => {
-  //     render(<App />);
-  //     const button = screen.getByText("Search");
-  //     const titleInput = screen.getByPlaceholderText("Search Title");
-  //     userEvent.type(titleInput, "Titanic");
-  //     fireEvent.click(button);
-  //     await waitFor(() => screen.getByText("Titanic"));
-  //     expect(screen.getByText("Titanic")).toBeInTheDocument();
-  //   });
-  // });
+  // integration test
+  describe("When request is successful", () => {
+    setupTestServer({
+      Title: "Titanic",
+      Ratings: [],
+      Released: "",
+      Genre: "",
+      Director: "",
+      Write: "",
+      Actors: "",
+      Language: "",
+      Awards: "",
+    });
+    it("should render movie details", async () => {
+      render(<App />);
+      const button = screen.getByText("Search");
+      const titleInput = screen.getByPlaceholderText("Search Title");
+      userEvent.type(titleInput, "Titanic");
+      fireEvent.click(button);
+      await waitFor(() => screen.getByText("Titanic"));
+      expect(screen.getByText("Titanic")).toBeInTheDocument();
+    });
+  });
 
-  // describe("When request is not successful", () => {
-  //   setupTestServer({ Error: "Invalid API key" });
+  describe("When request is not successful", () => {
+    setupTestServer({ Error: "Invalid API key" });
 
-  //   it("should render error badge with correct error", async () => {
-  //     render(<App />);
+    it("should render error badge with correct error", async () => {
+      render(<App />);
 
-  //     const button = screen.getByText("Search");
-  //     const titleInput = screen.getByPlaceholderText("Search Title");
-  //     userEvent.type(titleInput, "Titanic");
-  //     fireEvent.click(button);
+      const button = screen.getByText("Search");
+      const titleInput = screen.getByPlaceholderText("Search Title");
+      userEvent.type(titleInput, "Titanic");
+      fireEvent.click(button);
 
-  //     await waitFor(() => screen.getByRole("error-badge"));
+      await waitFor(() => screen.getByRole("error-badge"));
 
-  //     expect(screen.getByRole("error-badge")).toHaveTextContent(
-  //       "Invalid API key"
-  //     );
-  //   });
-  // });
+      expect(screen.getByRole("error-badge")).toHaveTextContent(
+        "Invalid API key"
+      );
+    });
+  });
 });
