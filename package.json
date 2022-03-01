@@ -19,7 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "BUILDVERSION=`git rev-parse --abbrev-ref HEAD` && react-scripts build && sed -i -- 's/%BUILDVERSION%/$BUILDVERSION/g' build/index.html",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
