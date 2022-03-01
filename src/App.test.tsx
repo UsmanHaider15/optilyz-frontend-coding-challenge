@@ -91,4 +91,22 @@ describe("App", () => {
 
     expect(spyOnFetch).toBeCalledTimes(1);
   });
+
+  it("shouldn't call API if input field is empty", async () => {
+    render(<App />);
+
+    const spyOnFetch = jest.spyOn(global, "fetch");
+    spyOnFetch.mockImplementation((): any =>
+      Promise.resolve({
+        json: (): Promise<object> => Promise.resolve([{}]),
+      })
+    );
+
+    const button = screen.getByText("Search");
+    const titleInput = screen.getByPlaceholderText("Search Title");
+    userEvent.type(titleInput, "");
+    fireEvent.click(button);
+
+    expect(spyOnFetch).toBeCalledTimes(0);
+  });
 });

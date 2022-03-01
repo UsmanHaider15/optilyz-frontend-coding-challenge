@@ -12,7 +12,7 @@ export const SearchTitle: FunctionComponent<Props> = ({ onSetUrl }) => {
 
   const handleSubmit = (event: FormEvent): void => {
     event.preventDefault();
-    onSetUrl(getUrl(titleText));
+    if (titleText) onSetUrl(getUrl(titleText));
   };
 
   return (
