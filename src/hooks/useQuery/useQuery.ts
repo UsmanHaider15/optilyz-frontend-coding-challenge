@@ -17,8 +17,14 @@ export const useQuery = () => {
     dispatch(createQueryingAction(true));
     fetch(state.url)
       .then((response) => response.json())
-      .then((response) => dispatch(createQuerySuccessAction(response)))
-      .catch((error) => dispatch(createQueryErrorAction("Request Failed.")));
+      .then((response) => {
+        if (response.hasOwnProperty("Error")) {
+          dispatch(createQueryErrorAction(response["Error"]));
+        } else {
+          dispatch(createQuerySuccessAction(response));
+        }
+      })
+      .catch((error) => dispatch(createQueryErrorAction(error.message)));
   }, [state.url]);
 
   return {

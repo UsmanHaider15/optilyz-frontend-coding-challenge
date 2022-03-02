@@ -1,4 +1,4 @@
-import { ApiResponse } from "../../types";
+import { Data } from "../../types";
 
 export enum QueryActionTypes {
   QUERYING = "QUERYING",
@@ -14,7 +14,7 @@ export const createQueryingAction = (querying: boolean) => ({
 
 type QueryingAction = ReturnType<typeof createQueryingAction>;
 
-export const createQuerySuccessAction = (data: Partial<ApiResponse>) => ({
+export const createQuerySuccessAction = (data: Partial<Data>) => ({
   type: QueryActionTypes.QUERY_SUCCESS as const,
   payload: data,
 });

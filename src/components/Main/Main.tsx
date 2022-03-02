@@ -9,12 +9,12 @@ import {
   StyledCardTitle,
 } from "./StyledCard";
 import StyledMain from "./StyledMain";
-import { ApiResponse, Rating } from "../../types";
+import { Data, Rating } from "../../types";
 
 export interface Props {
   loading: boolean;
   error: string;
-  data: Partial<ApiResponse>;
+  data: Partial<Data>;
 }
 
 const allowedFields: string[] = [
@@ -28,7 +28,6 @@ const allowedFields: string[] = [
 ];
 
 export const Main: FunctionComponent<Props> = ({ loading, error, data }) => {
-  // TODO: rethink this structure logic
   if (loading)
     return (
       <StyledMain>
@@ -42,12 +41,6 @@ export const Main: FunctionComponent<Props> = ({ loading, error, data }) => {
       </StyledMain>
     );
 
-  if (data.hasOwnProperty("Error"))
-    return (
-      <StyledMain>
-        <Badge label={data["Error"]!} type="error" />
-      </StyledMain>
-    );
   if (Object.keys(data).length === 0)
     return (
       <StyledMain>
