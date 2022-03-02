@@ -9,12 +9,12 @@ import {
   StyledCardTitle,
 } from "./StyledCard";
 import StyledMain from "./StyledMain";
-import { Data, Rating } from "../../types";
+import { ApiResponse, Rating } from "../../types";
 
 export interface Props {
   loading: boolean;
   error: string;
-  data: Partial<Data>;
+  data: Partial<ApiResponse>;
 }
 
 const allowedFields: string[] = [
@@ -28,17 +28,24 @@ const allowedFields: string[] = [
 ];
 
 export const Main: FunctionComponent<Props> = ({ loading, error, data }) => {
+  // TODO: rethink this structure logic
   if (loading)
     return (
       <StyledMain>
         <Badge label="loading..." />
       </StyledMain>
     );
-
   if (error)
     return (
       <StyledMain>
         <Badge label={error} type="error" />
+      </StyledMain>
+    );
+
+  if (data.hasOwnProperty("Error"))
+    return (
+      <StyledMain>
+        <Badge label={data["Error"]!} type="error" />
       </StyledMain>
     );
   if (Object.keys(data).length === 0)
@@ -58,15 +65,15 @@ export const Main: FunctionComponent<Props> = ({ loading, error, data }) => {
           <StyledCardDetails>
             {Object.entries(data)
               .filter(([key]) => allowedFields.includes(key))
-              .map(([key, value], idx) => (
-                <div key={idx}>
+              .map(([key, value]) => (
+                <div>
                   <span style={{ fontWeight: "bold" }}>{key}:</span> {value}
                 </div>
               ))}
 
             <br />
-            {data?.Ratings?.map((rating: Rating, idx: number) => (
-              <div key={idx}>
+            {data?.Ratings?.map((rating: Rating) => (
+              <div>
                 <span style={{ fontWeight: "bold" }}>{rating["Value"]}</span>{" "}
                 {rating["Source"]}
               </div>

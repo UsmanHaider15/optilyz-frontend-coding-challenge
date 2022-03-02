@@ -5,11 +5,11 @@ import QueryStateType from "./types";
 const useQueryReducer = (state: QueryStateType, action: UseQueryAction) => {
   switch (action.type) {
     case QueryActionTypes.QUERYING:
-      return { ...initialState, loading: true };
+      return { ...initialState, url: state.url, loading: true };
     case QueryActionTypes.QUERY_SUCCESS:
-      return { ...initialState, data: action.payload };
+      return { ...initialState, url: state.url, data: action.payload };
     case QueryActionTypes.QUERY_ERROR:
-      return { ...initialState, error: action.payload };
+      return { ...initialState, url: state.url, error: action.payload };
     case QueryActionTypes.SET_URL:
       return { ...initialState, url: action.payload };
     default:

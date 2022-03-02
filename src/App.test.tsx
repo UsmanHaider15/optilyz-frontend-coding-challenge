@@ -4,18 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { setupServer } from "msw/node";
 import { rest } from "msw";
 import App from "./App";
-
-const setupTestServer = (response: object): void => {
-  const server = setupServer(
-    rest.get("https://www.omdbapi.com", (req, res, ctx) => {
-      return res(ctx.json(response));
-    })
-  );
-
-  beforeAll(() => server.listen());
-  afterEach(() => server.resetHandlers());
-  afterAll(() => server.close());
-};
+import { baseUrl } from "./services/httpService";
 
 const submitForm = (
   formInput: string,
@@ -44,7 +33,7 @@ describe("App", () => {
 
   // integration test
   describe("When request is successful", () => {
-    setupTestServer({
+    const response = {
       Title: "Titanic",
       Ratings: [],
       Released: "",
@@ -54,7 +43,16 @@ describe("App", () => {
       Actors: "",
       Language: "",
       Awards: "",
-    });
+    };
+    const server = setupServer(
+      rest.get(baseUrl, (req, res, ctx) => {
+        return res(ctx.json(response));
+      })
+    );
+
+    beforeAll(() => server.listen());
+    afterEach(() => server.resetHandlers());
+    afterAll(() => server.close());
     it("should render movie details", async () => {
       render(<App />);
 
@@ -66,7 +64,16 @@ describe("App", () => {
   });
 
   describe("When request is not successful", () => {
-    setupTestServer({ Error: "Invalid API key" });
+    const response = { Error: "Invalid API key" };
+    const server = setupServer(
+      rest.get(baseUrl, (req, res, ctx) => {
+        return res(ctx.json(response));
+      })
+    );
+
+    beforeAll(() => server.listen());
+    afterEach(() => server.resetHandlers());
+    afterAll(() => server.close());
 
     it("should render error badge with correct error", async () => {
       render(<App />);

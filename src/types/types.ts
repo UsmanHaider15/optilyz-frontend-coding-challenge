@@ -5,7 +5,7 @@ export type Rating = {
   Value: string;
 };
 
-export type Data = {
+export type ApiResponse = {
   Title: string;
   Year: string;
   Rated: string;
@@ -31,4 +31,5 @@ export type Data = {
   Production: string;
   Website: string;
   Response: string;
+  Error: string;
 };
