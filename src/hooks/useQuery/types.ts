@@ -1,10 +1,10 @@
 import * as React from "react";
-import { Data } from "../../types";
+import { ApiResponse } from "../../types";
 
 type QueryStateType = {
   loading: boolean;
   error: string;
-  data: Partial<Data>;
+  data: Partial<ApiResponse>;
   url: string;
 };
 
