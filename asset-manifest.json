@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/optilyz-frontend-coding-challenge/static/css/main.964fdded.css",
-    "main.js": "/optilyz-frontend-coding-challenge/static/js/main.d51f59e3.js",
+    "main.js": "/optilyz-frontend-coding-challenge/static/js/main.fdd3f571.js",
     "static/js/787.ef00b272.chunk.js": "/optilyz-frontend-coding-challenge/static/js/787.ef00b272.chunk.js",
     "index.html": "/optilyz-frontend-coding-challenge/index.html",
     "main.964fdded.css.map": "/optilyz-frontend-coding-challenge/static/css/main.964fdded.css.map",
-    "main.d51f59e3.js.map": "/optilyz-frontend-coding-challenge/static/js/main.d51f59e3.js.map",
+    "main.fdd3f571.js.map": "/optilyz-frontend-coding-challenge/static/js/main.fdd3f571.js.map",
     "787.ef00b272.chunk.js.map": "/optilyz-frontend-coding-challenge/static/js/787.ef00b272.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.964fdded.css",
-    "static/js/main.d51f59e3.js"
+    "static/js/main.fdd3f571.js"
   ]
 }
