@@ -15,12 +15,20 @@ jobs:
           node-version: "14"
       - name: Install Packages
         run: npm install
+      - name: Create Test env file
+        run: |
+          touch .env.test.local
+          echo REACT_APP_OMDB_API_KEY=1234abcd >> .env.test.local
       - name: Test
         run: npm test
+      - name: Create .env.production.local file
+        run: |
+          touch .env.production.local
+          echo REACT_APP_OMDB_API_KEY=${{ secrets.REACT_APP_OMDB_API_KEY }} >> .env.production.local
       - name: Build page
         run: npm run build
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GH_TOKEN }}
+          github_token: ${{ secrets.TOKEN }}
           publish_dir: ./build
