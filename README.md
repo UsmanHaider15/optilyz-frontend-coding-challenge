@@ -1,4 +1,8 @@
+## How to Run Locally
+Create `.env` or `.env.development.local` file and add following env variables
+1. `REACT_APP_OMDB_API_KEY`
 
+You can get API Key from https://omdbapi.com/apikey.aspx
 ## Approach 
 
 I used TDD approach to implement this application, 
@@ -17,9 +21,15 @@ Steps of that process are following
 11. Added useQuery and made integration tests to pass
 12. Added Storybook for Main component and implement styling
 
+## Deploy
+This app is deployed to gh pages using github actions, you need to take following steps to make it pass
+
+1. create personal action token and add it to your repo secrets as `GH_TOKEN` to grant github action access to repo
+2. Add `REACT_APP_OMDB_API_KEY` to your repo secrets so that github actions can use it in build process
+
 ## useQuery Hook API 
 
 ```js
 const [loading, error, data, setUrl] = useQuery();
 ```
-`setUrl` is callback which takes API to and makes request and returns `data`
+`setUrl` takes url as an argument and returns data
