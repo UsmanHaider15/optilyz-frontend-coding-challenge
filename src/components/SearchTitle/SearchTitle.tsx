@@ -4,7 +4,7 @@ import { Button } from "../common/Button";
 import { StyledInput } from "../Styled";
 
 export interface Props {
-  onSetUrl: (description: string) => void;
+  onSetUrl: (url: URL) => void;
 }
 
 export const SearchTitle: FunctionComponent<Props> = ({ onSetUrl }) => {

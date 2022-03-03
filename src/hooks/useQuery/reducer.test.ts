@@ -32,7 +32,10 @@ describe("useQuery reducer", () => {
 
   it("set query in state", () => {
     expect(
-      useQueryReducer(initialState, createSetUrlAction("http://example.com"))
-    ).toEqual(QueryState({ url: "http://example.com" }));
+      useQueryReducer(
+        initialState,
+        createSetUrlAction(new URL("http://example.com"))
+      )
+    ).toEqual(QueryState({ url: new URL("http://example.com") }));
   });
 });

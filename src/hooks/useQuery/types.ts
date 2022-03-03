@@ -5,7 +5,7 @@ type QueryStateType = {
   loading: boolean;
   error: string;
   data: Partial<Data>;
-  url: string;
+  url: URL | null;
 };
 
 export default QueryStateType;

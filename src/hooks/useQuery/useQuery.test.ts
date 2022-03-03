@@ -15,7 +15,7 @@ describe("useQuery hook", () => {
     expect(loading).toBe(false);
     expect(error).toEqual("");
     expect(data).toEqual({});
-    expect(url).toEqual("");
+    expect(url).toEqual(null);
   });
 
   describe("when request is successful", () => {
@@ -36,7 +36,7 @@ describe("useQuery hook", () => {
       const { setUrl } = result.current;
 
       act(() => {
-        setUrl("http://example.com");
+        setUrl(new URL("http://example.com"));
       });
 
       await delay(1000);
@@ -51,29 +51,12 @@ describe("useQuery hook", () => {
       const { setUrl } = result.current;
 
       act(() => {
-        setUrl("http://example.com");
+        setUrl(new URL("http://example.com/"));
       });
 
-      expect(result.current.url).toEqual("http://example.com");
+      expect(result.current.url!.href).toEqual("http://example.com/");
     });
 
-    it("shouldn't trigger API call when called with empty value", () => {
-      const { result } = renderHook(() => useQuery());
-      const { setUrl } = result.current;
-
-      const spyOnFetch = jest.spyOn(global, "fetch");
-      spyOnFetch.mockImplementation((): any =>
-        Promise.resolve({
-          json: (): Promise<object> => Promise.resolve([{}]),
-        })
-      );
-
-      act(() => {
-        setUrl("");
-      });
-
-      expect(spyOnFetch).toBeCalledTimes(0);
-    });
     it("should API call once when called with url", () => {
       const { result } = renderHook(() => useQuery());
       const { setUrl } = result.current;
@@ -86,7 +69,7 @@ describe("useQuery hook", () => {
       );
 
       act(() => {
-        setUrl("http://example.com");
+        setUrl(new URL("http://example.com"));
       });
 
       expect(spyOnFetch).toBeCalledTimes(1);

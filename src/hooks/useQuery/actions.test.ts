@@ -29,9 +29,9 @@ describe("actions", () => {
   });
 
   it("createSetUrlAction create action with payload set to query string", () => {
-    expect(createSetUrlAction("query")).toEqual({
+    expect(createSetUrlAction(new URL("http://exmaple.com"))).toEqual({
       type: QueryActionTypes.SET_URL,
-      payload: "query",
+      payload: new URL("http://exmaple.com"),
     });
   });
 });

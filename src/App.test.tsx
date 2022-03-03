@@ -45,7 +45,7 @@ describe("App", () => {
       Awards: "",
     };
     const server = setupServer(
-      rest.get(baseUrl, (req, res, ctx) => {
+      rest.get(baseUrl.href, (req, res, ctx) => {
         return res(ctx.json(response));
       })
     );
@@ -66,7 +66,7 @@ describe("App", () => {
   describe("When request is not successful", () => {
     const response = { Error: "Invalid API key" };
     const server = setupServer(
-      rest.get(baseUrl, (req, res, ctx) => {
+      rest.get(baseUrl.href, (req, res, ctx) => {
         return res(ctx.json(response));
       })
     );

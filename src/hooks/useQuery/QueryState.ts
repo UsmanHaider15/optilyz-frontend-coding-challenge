@@ -4,7 +4,7 @@ export const initialState: QueryStateType = {
   loading: false,
   error: "",
   data: {},
-  url: "",
+  url: null,
 };
 
 // factory function for creating QueryState object

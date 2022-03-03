@@ -12,10 +12,10 @@ export const useQuery = () => {
   const [state, dispatch] = useReducer(useQueryReducer, initialState);
 
   useEffect(() => {
-    if (!state.url || !state.url.trim()) return;
+    if (!state.url) return;
 
     dispatch(createQueryingAction(true));
-    fetch(state.url)
+    fetch(state.url.href)
       .then((response) => response.json())
       .then((response) => {
         if (response.hasOwnProperty("Error")) {
@@ -29,6 +29,8 @@ export const useQuery = () => {
 
   return {
     ...state,
-    setUrl: (url: string) => dispatch(createSetUrlAction(url)),
+    setUrl: (url: URL) => {
+      if (url) dispatch(createSetUrlAction(new URL(url)));
+    },
   };
 };

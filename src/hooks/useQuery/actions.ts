@@ -28,7 +28,7 @@ export const createQueryErrorAction = (error: string) => ({
 
 type QueryErrorAction = ReturnType<typeof createQueryErrorAction>;
 
-export const createSetUrlAction = (url: string) => ({
+export const createSetUrlAction = (url: URL) => ({
   type: QueryActionTypes.SET_URL as const,
   payload: url,
 });
